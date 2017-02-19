@@ -6,7 +6,6 @@
  * Owner: Kim Kristo
  * Date creation : 13.12.2016
  */
-
 package oh3ebf.couchdb.template;
 
 import org.apache.log4j.Logger;
@@ -20,7 +19,7 @@ public class CouchDbDemoApplication {
     private final Logger log = Logger.getLogger(CouchDbDemoApplication.class);
 
     public static void main(String[] args) {
-        
+
         SpringApplication.run(CouchDbDemoApplication.class, args);
     }
 }

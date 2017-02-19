@@ -1,14 +1,13 @@
 /**
  * Software: Spring CouchDb Template
- * Module: CouchDbFactory class
- * Version: 0.1
+ * Module: CouchDbFactory class Version: 0.1
  * Licence: GPL2
  * Owner: Kim Kristo
  * Date creation : 13.12.2016
  */
-
 package oh3ebf.couchdb.template;
 
+import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
@@ -30,6 +29,10 @@ public class CouchDbFactory {
     String passwd;
     @Value("${couchdb.database}")
     String dbName;
+    @Value("${couchdb.host}")
+    String host;
+    @Value("${couchdb.port}")
+    String port;
 
     /**
      * Function returns connector to database
@@ -40,14 +43,20 @@ public class CouchDbFactory {
     public CouchDbConnector CouchDbConnector() {
 
         if (dbConnector == null) {
-            HttpClient httpClient = new StdHttpClient.Builder()
-                    .username(user)
-                    .password(passwd)
-                    .build();
-            CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-            dbConnector = dbInstance.createConnector(dbName, true);
+            try {
+                HttpClient httpClient = new StdHttpClient.Builder()
+                        .url("http://" + host + ":" + port + "/")
+                        .username(user)
+                        .password(passwd)
+                        .build();
+                CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
+                // connect and create database if not exist
+                dbConnector = dbInstance.createConnector(dbName, true);
 
-            log.info("Connected to CouchDb " + dbName + "...");
+                log.info("Connected to CouchDb " + dbName + "...");
+            } catch (MalformedURLException ex) {
+                log.error("Malformed url: " + host);
+            }
         }
 
         return dbConnector;

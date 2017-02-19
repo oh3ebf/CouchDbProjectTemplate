@@ -6,9 +6,8 @@
  * Owner: Kim Kristo
  * Date creation : 14.12.2016
  */
-package oh3ebf.demo;
+package oh3ebf.couchdb.template;
 
-import oh3ebf.couchdb.template.CouchDbFactory;
 import oh3ebf.couchdb.template.model.Demo;
 import oh3ebf.couchdb.template.services.DemoService;
 import java.util.List;
@@ -18,10 +17,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("testing")
 public class CouchDbRepositoryUnitTest {
 
     private final Logger log = Logger.getLogger(CouchDbFactory.class);
